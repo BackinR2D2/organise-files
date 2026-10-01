@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+echo "Organise files by type"
+files=( $(find . -maxdepth 1 -type f) )
+
+if [[ ! -d "./photos" ]]; then
+        mkdir "./photos"
+fi
+
+if [[ ! -d "./pdf" ]]; then
+        mkdir "./pdf"
+fi
+
+if [[ ! -d "./text" ]]; then
+        mkdir "./text"
+fi
+
+for file in "${files[@]}"; do
+        splitFile=(${file//./ })
+        ext="${splitFile[1]}"
+
+        if [[ "$ext" == "png" ]] || [[ "$ext" == "jpg" ]] || [[ "$ext" == "jpeg" ]]; then
+                mv -i "$file" ./photos
+        fi
+
+        if [[ "$ext" == "pdf" ]]; then
+                mv -i "$file" ./pdf
+        fi
+
+        if [[ "$ext" == "txt" ]]; then
+                mv -i "$file" ./text
+        fi
+done
+
+message="Files moved successfully"
+messageLength="${#message}"
+
+for ((i = 0; i < messageLength; i++)); do
+        # echo "${message:0:$i}"
+        printf "\e[9$((($i + 1) % 9))m${message:$i:1}\e"
+        sleep 0.1
+done
+echo

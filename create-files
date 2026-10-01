@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+files=(
+        p1.png
+        p2.png
+        t.txt
+        p3.jpeg
+        p4.jpg
+        p5.png
+        t1.txt
+        t2.txt
+        t3.pdf
+        t4.pdf
+        test.txt
+        test-photo.png
+)
+
+for f in "${files[@]}"; do
+        # echo "$f"
+        touch "$f"
+        echo "$f successfully created."
+done
